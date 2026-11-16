@@ -1,5 +1,7 @@
 # Feedback Board
 
+[![CI](https://github.com/smrafi4130/feedback-board/actions/workflows/ci.yml/badge.svg)](https://github.com/smrafi4130/feedback-board/actions/workflows/ci.yml)
+
 A full-stack product feedback board — users post feature requests, upvote, comment, and admins triage status — built with the **Next.js App Router**, **React Server Components**, **Server Actions**, **Postgres** (via Drizzle) and cookie-based auth.
 
 ![board](docs/screenshots/board.png)
