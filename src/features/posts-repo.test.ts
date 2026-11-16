@@ -81,8 +81,10 @@ describe("posts repository (against PGlite Postgres)", () => {
       .insert(posts)
       .values({ title: "Idea", body: "the full body", authorId: alice })
       .returning({ id: posts.id });
-    await db.insert(comments).values({ postId: p!.id, authorId: bob, body: "first" });
-    await db.insert(comments).values({ postId: p!.id, authorId: alice, body: "second" });
+    // Explicit, distinct timestamps so the "newest first" assertion can't depend
+    // on two inserts landing in the same millisecond (which ties createdAt).
+    await db.insert(comments).values({ postId: p!.id, authorId: bob, body: "first", createdAt: new Date("2026-01-01T00:00:00Z") });
+    await db.insert(comments).values({ postId: p!.id, authorId: alice, body: "second", createdAt: new Date("2026-01-02T00:00:00Z") });
 
     const detail = await getPostById(db, p!.id);
     expect(detail).toMatchObject({ title: "Idea", body: "the full body", commentCount: 2 });
